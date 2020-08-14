@@ -1,0 +1,101 @@
+body {
+    background: #000;
+    color: #fff;
+    font-size: 12pt;
+    font-family: sans-serif;
+    line-height: 1.2;
+    margin: 12px 8px;
+    padding: 0; 
+}
+
+h1, h2 {
+    
+    text-align: center;
+    margin: 0 0 16px
+}
+h1 {
+    font-size: 2em;
+}
+h2 {
+    font-size: 1.5em;
+    margin-top: 32px;
+}
+p {
+    margin: 16px 0;
+}
+
+label {
+    margin: 0 0 4px;
+}
+input, textarea, button {
+    background: #222;
+    color:  #fff;
+    margin: 0;
+    padding: 4px 8px;
+    outline: 0;
+    border: 1px solid #999;
+    border-radius: 2px;
+    font-size: 1em;
+    font-family: inherit;
+}
+textarea {
+    resize: vertical;
+}
+button {
+    width: 100px;
+    cursor: pointer;
+}
+.invalid {
+    background: #200;
+    border-color: #f00;
+}
+
+.column {
+    margin: 0 auto;
+    max-width: 480px;
+}
+
+.form {
+    margin: 16px 0;
+}
+.form-row {
+    display: flex;
+    flex-flow: column nowrap;
+    margin: 8px 0;
+}
+.form-controls {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: flex-end;
+    margin: 16px 0 8px;
+}
+
+.log {
+    border-top: 1px solid #999;
+    border-bottom: 1px solid #999;
+    word-break: break-word;
+}
+.entry {
+    padding: 4px 8px;
+}
+.entry:nth-child(odd) {
+    background: #111;
+}
+.entry:nth-child(even) {
+    background: #222;
+}
+.entry + .entry {
+    border-top: 1px dotted #999;
+}
+.entry-info {
+    margin-bottom: 4px;
+}
+.entry-name {
+    font-weight: bold;
+}
+.entry-date {
+    color: #666666;
+}
+.entry-message {
+    margin: 0;
+}
