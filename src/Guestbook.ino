@@ -20,6 +20,7 @@ const IPAddress NET_SUBNET(255, 255, 255, 0);
 // server settings
 const uint8_t DNS_PORT = 53;
 const uint8_t HTTP_PORT = 80;
+const char *CACHE_CONTROL_HEADER = "max-age=86400";
 
 // paths
 const char *WEBROOT_PATH = "/www/";
@@ -60,7 +61,7 @@ void setup() {
     // register handlers
     webServer.on(GUESTS_PATH, HTTP_GET,  handleGetGuests);
     webServer.on(GUESTS_PATH, HTTP_POST, handlePostGuests);
-    webServer.serveStatic("/", fileSystem, WEBROOT_PATH);
+    webServer.serveStatic("/", fileSystem, WEBROOT_PATH, CACHE_CONTROL_HEADER);
     webServer.onNotFound(handleNotFound);
     webServer.begin(HTTP_PORT);
 
