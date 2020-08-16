@@ -4,9 +4,7 @@ An ESP8266 based web server that hosts an offline
 hosted pages, and guest log are all stored on an SD card. The provided firmware
 is written for the Arduino framework and tested on a WeMos D1 Mini clone.
 
-<div align="center">
-    <img src="screenshot.png" alt="Web interface" width="496px">
-</div>
+![Web interface](screenshot.png)
 
 
 ## Requirements

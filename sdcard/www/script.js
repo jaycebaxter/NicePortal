@@ -50,7 +50,7 @@ var guestbook = (function() {
 
     // check a form field for content and apply a style if invalid
     function validateField(field) {
-        if (field.value.length === 0) {
+        if (field.value.trim().length === 0) {
             field.classList.add('invalid');
             return false;
         } else {
