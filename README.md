@@ -1,4 +1,4 @@
-# ESP8266 Guestbook
+# Pocket Guestbook
 An ESP8266 based web server that hosts an offline
 [guestbook](https://en.wikipedia.org/wiki/Guestbook). WiFi settings,
 hosted pages, and guest log are all stored on an SD card. The provided firmware
