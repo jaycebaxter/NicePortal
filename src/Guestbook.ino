@@ -31,14 +31,12 @@ const char *GUESTS_PATH = "/guests.log";
 const char *DEFAULT_AP_SSID = "Guestbook";
 const char *DEFAULT_AP_PASSWORD = NULL;
 const char *DEFAULT_PORTAL_DOMAIN = "guestbook.lan";
-const char *DEFAULT_PORTAL_URL = "http://guestbook.lan/";
 
 
 FS &fileSystem = SDFS;
 SDFSConfig fsConfig;
 ConfigParser configParser;
 const char *portalDomain;
-const char *portalUrl;
 DNSServer dnsServer;
 ESP8266WebServer webServer;
 
@@ -56,7 +54,6 @@ void setup() {
         configFile.close();
     }
     portalDomain = configParser.get("portal_domain", DEFAULT_PORTAL_DOMAIN),
-    portalUrl = configParser.get("portal_url", DEFAULT_PORTAL_URL);
 
     // register handlers
     webServer.on(GUESTS_PATH, HTTP_GET,  handleGetGuests);
@@ -83,9 +80,13 @@ void loop() {
 }
 
 void handleNotFound() {
+    String redirectUrl = "http://";
+    redirectUrl += portalDomain;
+    redirectUrl += "/";
+
     // redirect to portal url if requesting a different domain
     if (!webServer.hostHeader().equals(portalDomain)) {
-        webServer.sendHeader("Location", portalUrl);
+        webServer.sendHeader("Location", redirectUrl);
         webServer.send(302);
         return;
     }
