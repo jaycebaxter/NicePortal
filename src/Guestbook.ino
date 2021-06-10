@@ -68,10 +68,10 @@ void setup() {
 
     // host AP for clients to connect to
     WiFi.mode(WIFI_AP);
+    WiFi.softAPConfig(NET_IP, NET_IP, NET_SUBNET);
     WiFi.softAP(
         configParser.get("ap_ssid",     DEFAULT_AP_SSID),
         configParser.get("ap_password", DEFAULT_AP_PASSWORD));
-    WiFi.softAPConfig(NET_IP, NET_IP, NET_SUBNET);
 }
 
 void loop() {
