@@ -1,0 +1,12 @@
+body {
+    font-family: Linux Libertine, Georgia, Times, serif;
+    line-height: 1.6;
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1rem;
+    color: #202122;
+}
+h1 { border-bottom: 1px solid #a2a9b1; }
+h2 { border-bottom: 1px solid #a2a9b1; }
+p { margin: 0.5em 0; }
+a { color: #3366cc; }

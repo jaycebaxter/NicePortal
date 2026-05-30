@@ -1,6 +1,6 @@
 body {
-    background: #000;
-    color: #fff;
+    background: #ffffff;
+    color: #000000;
     font-size: 12pt;
     font-family: sans-serif;
     line-height: 1.2;
@@ -8,6 +8,14 @@ body {
     padding: 0; 
 }
 
+h1 {
+    text-align: center;
+}
 .titleIntro {
     text-align: center;
+}
+
+a, a:visited {
+    color: #3366cc;
+    text-decoration: none;
 }
