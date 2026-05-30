@@ -8,9 +8,8 @@
 #include <ESP8266WebServer.h>
 #include <ESP8266WiFi.h>
 #include <FS.h>
-#include <SDFS.h>
-
 #include <cstdint>
+#include <LittleFS.h>
 
 
 // network settings
@@ -28,23 +27,19 @@ const char *CONFIG_PATH = "/settings.conf";
 const char *GUESTS_PATH = "/guests.log";
 
 // default settings
-const char *DEFAULT_AP_SSID = "Guestbook";
+const char *DEFAULT_AP_SSID = "NicePortal";
 const char *DEFAULT_AP_PASSWORD = NULL;
-const char *DEFAULT_PORTAL_DOMAIN = "guestbook.lan";
+const char *DEFAULT_PORTAL_DOMAIN = "niceportal.lan";
 
-
-FS &fileSystem = SDFS;
-SDFSConfig fsConfig;
+FS &fileSystem = LittleFS;
 ConfigParser configParser;
 const char *portalDomain;
 DNSServer dnsServer;
 ESP8266WebServer webServer;
 
-
 void setup() {
+    system_update_cpu_freq(160);
     // start SD card filesystem
-    fsConfig.setAutoFormat(false);
-    fileSystem.setConfig(fsConfig);
     fileSystem.begin();
 
     // load settings from config file
