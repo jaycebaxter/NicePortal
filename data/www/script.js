@@ -1,17 +1,24 @@
 /*
- * niceportal script.
+ * guestbook script.
  */
-var niceportal = (function() {
+var guestbook = (function() {
     // endpoints
     var GUESTS_PATH = '/guests.log';
 
     // messages
     var NO_GUESTS_MESSAGE = "You are the first guest!";
-    var THANKS_MESSAGE = "Thanks for your submission! "
-        + "Please invite your friends to sign as well.";
     var LOAD_ERROR = "Error loading guests.";
     var SUBMIT_ERROR = "Error submitting guest information.";
 
+    var fieldLabels = {
+        location: 'current location',
+        song: 'song stuck in my head',
+        food: 'best thing i ate this week',
+        artist: 'favourite artist',
+        game: 'favourite video game',
+        movie: 'favourite movie',
+        secret: 'secret'
+    };
 
     // make an async HTTP request
     function sendRequest(method, path, postData, onDone) {
@@ -50,26 +57,17 @@ var niceportal = (function() {
 
     // check a form field for content and apply a style if invalid
     function validateField(field) {
-        if (field.value.trim().length === 0) {
-            field.classList.add('invalid');
-            return false;
-        } else {
-            field.classList.remove('invalid');
-            return true;
-        }
+        field.classList.remove('invalid');
+        return true;
     }
 
     // extract form field values into an object
     function serializeForm(form) {
         var object = {};
         forEachField(form, function(field) {
-            // mark form as invalid
-            if (!validateField(field)) {
-                object = null;
-            }
-            // only add value if form is valid
-            if (object != null) {
-                object[field.name] = field.value;
+            var value = field.value.trim();
+            if (value.length > 0) {
+                object[field.name] = value;
             }
         });
         return object;
@@ -81,19 +79,14 @@ var niceportal = (function() {
         var guestStrings = guestsString.split('\n\n');
         for (var i = guestStrings.length - 1; i >= 0; --i) {
             try {
-                // parse guest from entry JSON
                 var guestJson = guestStrings[i].trim();
                 if (guestJson.length > 0) {
                     var guestObject = JSON.parse(guestJson);
                     guests.push(guestObject);
                 }
-                // filter out invalid guests
                 guests = guests.filter(function(guest) {
-                    return typeof guest.timestamp == 'number'
-                        && typeof guest.name == 'string'
-                        && typeof guest.message == 'string';
+                    return typeof guest.timestamp == 'number';
                 });
-
             } catch (exception) {
                 if (!(exception instanceof SyntaxError)) {
                     throw exception;
@@ -117,15 +110,21 @@ var niceportal = (function() {
 
     // convert a guest object into a log entry markup string
     function renderGuest(guest) {
-        var name = escapeHtml(guest.name);
-        var message = escapeHtml(guest.message);
+        var name = escapeHtml(guest.name || 'anonymous');
         var date = (new Date(guest.timestamp)).toLocaleString();
+        var rows = Object.keys(fieldLabels)
+            .filter(function(key) { return guest[key]; })
+            .map(function(key) {
+                return '<p class="entry-message"><strong>' + fieldLabels[key] + ':</strong> '
+                    + escapeHtml(guest[key]) + '</p>';
+            })
+            .join('');
         return '<article class="entry">'
                 + '<header class="entry-info">'
                     + '<span class="entry-name">' + name + '</span> '
                     + '<span class="entry-date">' + date + '</span>'
                 + '</header>'
-                + '<p class="entry-message">' + message + '</p>'
+                + rows
             + '</article>';
     }
 
@@ -153,16 +152,14 @@ var niceportal = (function() {
     }
 
     // submit the guest contained in the form and refresh the guest log
-    function addGuest(form, info, log) {
+    function addGuest(form, log) {
         var guest = serializeForm(form);
-        if (guest === null) {
-            return; // fields invalid
-        }
 
         // build payload
         guest.timestamp = Date.now();
-        guest.name = sanitizeString(guest.name);
-        guest.message = sanitizeString(guest.message);
+        if (guest.name) {
+            guest.name = sanitizeString(guest.name);
+        }
         var guestJson = JSON.stringify(guest);
         var postData = {
             contentType: "application/json",
@@ -175,7 +172,6 @@ var niceportal = (function() {
                 // refresh the log and remove the form
                 if (request.status === 200) {
                     loadGuests(log);
-                    info.innerText = THANKS_MESSAGE;
                     form.parentElement.removeChild(form);
 
                 // show error message
@@ -187,11 +183,10 @@ var niceportal = (function() {
 
     return {
         init: function(selector) {
-            var niceportal = document.querySelector(selector);
-            var form = niceportal.querySelector(".form");
-            var info = niceportal.querySelector(".info");
-            var submit = niceportal.querySelector(".submit");
-            var log = niceportal.querySelector(".log");
+            var guestbook = document.querySelector(selector);
+            var form = guestbook.querySelector(".form");
+            var submit = guestbook.querySelector(".submit");
+            var log = guestbook.querySelector(".log");
 
             // register field validators
             forEachField(form, function(field) {
@@ -202,7 +197,7 @@ var niceportal = (function() {
 
             // register submit handler
             submit.addEventListener('click', function(event) {
-                addGuest(form, info, log);
+                addGuest(form, log);
             });
 
             // populate

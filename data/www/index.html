@@ -2,29 +2,89 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>hello world !</title>
+        <title>guestbook</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=10.0" />
-        <link rel="stylesheet" type="text/css" href="/indexStyle.css"/>
+        <link rel="stylesheet" type="text/css" href="/style.css"/>
+        <!-- it;s sooo slow i hope this does something https://web.dev/articles/codelab-preload-web-fonts -->
+        <link rel="preload" href="/fonts/JetBrainsMono-Medium.woff2" as="font" type="font/woff2" crossorigin>
+        <script src="/script.js"></script>
     </head>
     <body>
-        <!-- <nav>
-            <ul>
-                <li><a href="guestbook.html">Guestbook</a></li>
-            </ul>
-        </nav> -->
-        <h1>NicePortal</h1>
-        <p class="titleIntro">A project by Jayce Baxter :)</p>
-        <p>This is a huge work in progress! Intended for a hackathon - will likely be broken when you see it!</p>
-        <p>Guestbook link is intentionally broken because while I do plan to add it, it gets wiped every time I update :(</p>
+        <article id="guestbook" class="column">
+            <h1>guestbook</h1>
+            <p>hi it's me <a href="/about.html">jayce</a></p>
 
-        <h2>What is it?</h2>
-        <p>NicePortal is a <a href="wiki/captivePortal.html">Captive Portal</a> with some interesting wikipedia articles, games, and a <a href="fixthis.html">guestbook</a> for you to sign.</p>
+            <p>this is a wifi network that only exists when you're physically near me</p>
+            
+            <p>it is not connected to the internet</p>
 
-        <p>It makes use of a small microcontroller (ESP8266 for the nerds) which hosts a local web server</p>
+            <p>all fields are optional</p>
+            
+            <p>once you walk away it disappears again. but whatever you leave in the guestbook stays with me for others to see</p>
 
-        <h2>Why is it called NicePortal?</h2>
-        <p>Typically, these devices are used for <a href="wiki/evilPortal.html">evil portals!</a> They disguise themselves as free wifi and phish the hell out of people</p>
+            <form class="form">
+                <div class="form-row">
+                    <label for="name">name (or alias)</label>
+                    <input id="name" name="name"
+                        class="form-field" type="text" maxlength="128" />
+                </div>
 
-        <p>Luckily for you I'm not doing that, but please stop connecting to every sketchy wifi network you see :(</p>
+                <div class="form-row">
+                    <label for="location">current location:</label>
+                    <textarea id="location" name="location"
+                        class="form-field" rows="3" maxlength="512" ></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="song">song stuck in my head:</label>
+                    <textarea id="song" name="song"
+                        class="form-field" rows="3" maxlength="512" ></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="food">best thing i ate this week:</label>
+                    <textarea id="food" name="food"
+                        class="form-field" rows="3" maxlength="512" ></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="artist">favourite artist:</label>
+                    <textarea id="artist" name="artist"
+                        class="form-field" rows="3" maxlength="512" ></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="game">favourite video game:</label>
+                    <textarea id="game" name="game"
+                        class="form-field" rows="3" maxlength="512" ></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="movie">favourite movie:</label>
+                    <textarea id="movie" name="movie"
+                        class="form-field" rows="3" maxlength="512" ></textarea>
+                </div>
+
+                <div class="form-row">
+                    <label for="secret">leave a secret:</label>
+                    <textarea id="secret" name="secret"
+                        class="form-field" rows="3" maxlength="512" ></textarea>
+                </div>
+                
+                <div class="form-controls">
+                    <button class="submit" type="button">submit</button> 
+                </div>
+            </form>
+
+            <h2>Guests</h2>
+            <div class="log">
+                <div class="entry">Loading...</div>
+            </div>
+        </article>
+        <script>
+            (function() {
+                guestbook.init('#guestbook');
+            })();
+        </script>
     </body>
 </html>

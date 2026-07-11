@@ -1,18 +1,30 @@
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/JetBrainsMono-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
     background: #000;
     color: #fff;
     font-size: 12pt;
-    font-family: sans-serif;
+    font-family: 'JetBrains Mono', monospace;
     line-height: 1.2;
     margin: 12px 8px;
     padding: 0; 
 }
 
+a, a:visited {
+    color: white;
+}
 h1, h2 {
     
     text-align: center;
     margin: 0 0 16px
 }
+
 h1 {
     font-size: 2em;
 }
@@ -97,5 +109,13 @@ button {
     color: #666666;
 }
 .entry-message {
-    margin: 0;
+    margin: 0 0 0.5rem 0;
+}
+
+.me {
+    width: 150px;
+    height: 150px;
+    border-radius: 25%;
+    display: block;
+    margin: 0 auto;
 }
